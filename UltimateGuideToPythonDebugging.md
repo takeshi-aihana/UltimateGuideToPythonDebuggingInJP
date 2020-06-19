@@ -96,13 +96,13 @@ loggers:  # "root" から派生したロガーの定義
     propagate: no  # このロガーはログを "root" へは伝搬しない
 ```
 
-Python のコードの中に、この類の大きな設定を「持ち込んでしまう」とトレースや変更、そして保守が難しくなってしまう場合があります。
-YAML ファイルの中に入れておけば、上記のような非常に特殊な設定を使って複数のロガーを設定したり切り替えたりするのがとても簡単になります。
+Python のコードの中に、この類の大きな設定を「持ち込む」とトレースや変更、そして保守が難しくなってしまう場合があります。
+YAML ファイルの中に入れておけば、上記のようなかなり特殊な設定を使った複数のロガーを設定したり切り替えたりするのがとても簡単になります。
 
-これらの設定項目がどこからきたものなのか疑問に思ったなら、ドキュメントが[ここ](https://docs.python.org/3.8/library/logging.config.html)にあります。
-さらに、それらの大部分は、冒頭の例でご覧になったように単なる「*キーワード引数*」です。
-そしてファイルの中に設定があるということは、どういうわけか読み込んであげる必要があるということになります。
-YAML ファイルを使った一番簡単な方法は：
+これらの設定項目がどこからきたものなのか疑問に思ったならば、ドキュメントが[ここ](https://docs.python.org/3.8/library/logging.config.html)にあります。
+さらに、それらの大部分は、冒頭の例でご覧になったように、単なる「*キーワード引数*」です。
+そしてファイルの中に設定があるということは、どういうわけか読み込んであげる必要があるということです。
+したがって YAML ファイルを使った一番簡単な方法は：
 
 ```Python
 In [1]: import yaml
@@ -124,8 +124,8 @@ Out[6]: <module 'logging.config' from '/usr/lib/python3.6/logging/config.py'>
 
 実際のところ Python のロガーは YAML ファイルを直接的にはサポートしていませんが、*ディクショナリ* 型の設定形式はサポートしています。
 これは ``yaml.safe_load()`` メソッドを使って YAML ファイルから簡単に生成できます。
-もし古い ``.ini`` 形式のファイルを使う傾向がおありだとしても、私がここで言いたいことは、[このドキュメント](https://docs.python.org/3/howto/logging.html#configuring-logging)にあるように *ディクショナリ* 型の設定形式の方が新しいアプリケーションで推奨されるアプローチであるということです。
-その他の例についてはドキュメントの [Logging Cookbook](https://docs.python.org/3/howto/logging-cookbook.html#an-example-dictionary-based-configuration) を参照ください。
+もし古い ``.ini`` 形式のファイルを使う傾向がおありだったとしても、ここで私が言いたいことは、[このドキュメント](https://docs.python.org/3/howto/logging.html#configuring-logging)にあるように *ディクショナリ* 型の設定形式の方が新しいアプリケーションで推奨されるアプローチであるということです。
+その他の例についてはドキュメントの [Logging Cookbook](https://docs.python.org/3/howto/logging-cookbook.html#an-example-dictionary-based-configuration) の章を参照ください。
 
 ---
 
