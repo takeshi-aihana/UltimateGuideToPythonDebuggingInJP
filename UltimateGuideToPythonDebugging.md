@@ -278,5 +278,61 @@ class MyDict(dict):
 まずはクラッシュを引き起こす小さなスクリプトを見てみることにします：
 
 ```Python
+# crashing_app.py
+SOME_VAR = 42
+
+class SomeError(Exception):
+    pass
+
+def func():
+    raise SomeError('Something went wrong...')
+
+def main():
+    func()
 
 ```
+
+ここで ``-i`` オプション付きで実行すると、すぐにデバッグできる状態になります：
+
+```Python
+# クラッシュするアプリケーションを実行します
+$ python3 -i crashing_app.py
+Traceback (most recent call last):
+  File "crashing_app.py", line 23, in <module>
+    sys.exit(main())
+  File "crashing_app.py", line 20, in main
+    func()
+  File "crashing_app.py", line 17, in func
+    raise SomeError('Something went wrong...')
+__main__.SomeError: Something went wrong...
+>>> # 今、インタラクティブ・シェルモードに居ます
+>>> import pdb
+>>> pdb.pm()    # Post-Mortem デバッガを起動します
+> .../crashing_app.py(17)func()
+-> raise SomeError('Something went wrong...')
+(Pdb) # ここでデバッガモードに入るので、いろいろ調査したりコマンドを実行できます
+(Pdb) p SOME_VAR    # 変数の中身を表示します
+42
+(Pdb) l    # 現在実行している前後のコードを表示してみます
+ 12
+ 13     class SomeError(Exception):
+ 14         pass
+ 15 
+ 16     def func():
+ 17  ->     raise SomeError('Something went wrong...')
+ 18 
+ 19     def main():
+ 20         func()
+ 21 
+ 22     if __name__ == "__main__":
+(Pdb)  # このあともデバッグを継続します（ブレークポイントを張ったり、コードをステップ事項したりなど）
+
+```
+
+上で紹介したデバッグ・セッションの例は ``pdb`` を使って何ができるのかを端的に示しています。
+まずアプリケーションが終了したあと、対話式のデバッグ・セッションに入ります。
+次に ``pdb`` モジュールをインポートしてデバッガを起動します。
+この時点で ``pdb`` の全てのコマンドを利用できるようになります。
+上の例だと、``p`` コマンドを使って変数の中身を表示し、``l`` コマンドでコードの一覧を表示します。
+たいていはブレークポイントをセットするために ``b 行番号`` コマンドを使い、そのブレークポイントに到達するまで ``c`` コマンドを叩いてアプリケーションを実行させ、``s`` コマンドで関数の内部をステップ単位で実行し続け、追加で ``w`` コマンドでスタックトレースを表示することになります。
+コマンドの完全な一覧については [pdb のドキュメント](https://docs.python.org/3/library/pdb.html#debugger-commands)をご覧ください。

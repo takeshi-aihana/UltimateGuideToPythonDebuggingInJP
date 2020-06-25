@@ -7,20 +7,17 @@
 #--------+---------+---------+---------+---------X---------+---------+---------+
 
 import sys
-import logging
-# logging.disable(logging.DEBUG)
-logging.basicConfig(level=logging.DEBUG,
-                    format=' %(asctime)s - %(levelname)s - %(message)s')
 
-class MyDict(dict):
-    def __missing__(self, key):
-        message = f'{key} not present in the dictionary!'
-        logging.warning(message)
-        return message    # もしくは代わりに何かエラーを発行する
+SOME_VAR = 42
 
+class SomeError(Exception):
+    pass
+
+def func():
+    raise SomeError('Something went wrong...')
 
 def main():
-    logging.debug('')
+    func()
 
 if __name__ == "__main__":
     sys.exit(main())
