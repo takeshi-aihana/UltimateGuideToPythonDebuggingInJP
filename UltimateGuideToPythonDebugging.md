@@ -1,6 +1,6 @@
 # Python をデバッグするための究極のガイド
 
-* (原文: [Ultimate Guide to Python Debugging](https://martinheinz.dev/blog/24)/)
+* (原文: [Ultimate Guide to Python Debugging](https://martinheinz.dev/blog/24))
 
 ---
 
